@@ -1,0 +1,33 @@
+﻿@model IEnumerable<ApiReader.Models.GitHubRepoModel>
+
+@{
+    ViewBag.Title = "Top 25 GitHub Repositories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Top25Repos</h2>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.OwnerLogin)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.StargazersCount)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var repo in Model)
+        {
+            <tr>
+                <th scope="row"> @Html.DisplayFor(modelItem => repo.Id)</th>
+                <td>@Html.DisplayFor(modelItem => repo.Name)</td>
+                <td>@Html.DisplayFor(modelItem => repo.OwnerLogin)</td>
+                <td>@Html.DisplayFor(modelItem => repo.StargazersCount)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

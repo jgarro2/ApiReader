@@ -27,18 +27,20 @@ namespace ApiReader.Controllers
             List<GitHubRepoModel> listOfRepos = new List<GitHubRepoModel>();
             JArray items = JArray.Parse(gitHubApiResults.items);
             items.Children().ToList();
+            
 
             foreach (var item in items) 
             {
                 var js = new JavaScriptSerializer();
-                JsonResult json_item = item.ToObject<JsonResult>();
+                JsonResult json_item = item.ToObject<JsonResult>();                
                 listOfRepos.Add(
                         new GitHubRepoModel 
                         {
                             Id = js.Deserialize<GitHubRepoModel>(item.ToString()).Id,
-                            HtmlUrl = js.Deserialize<GitHubRepoModel>(item.ToString()).HtmlUrl,
-                            OwnerLogin = js.Deserialize<GitHubRepoModel>(item.ToString()).OwnerLogin,
-                            StargazersCount = js.Deserialize<GitHubRepoModel>(item.ToString()).StargazersCount
+                            Name = js.Deserialize<GitHubRepoModel>(item.ToString()).Name,
+                            Html_Url = js.Deserialize<GitHubRepoModel>(item.ToString()).Html_Url,
+                            Owner_Login = js.Deserialize<GitHubRepoModel>(item.ToString()).Owner_Login,
+                            Stargazers_Count = js.Deserialize<GitHubRepoModel>(item.ToString()).Stargazers_Count
                         }
                     );            
 
@@ -49,8 +51,9 @@ namespace ApiReader.Controllers
         public ActionResult Top25Repos()
         {
             string apiQueryUrl = "https://api.github.com/search/repositories?q=stars&sort=stars&order=dsc&per_page=25&page=1";
-            List<GitHubRepoModel> listOfRepos = GetReposFromGitHubData(DownloadApiResults(apiQueryUrl));            
-            return View(listOfRepos);
+            List<GitHubRepoModel> listOfRepos = GetReposFromGitHubData(DownloadApiResults(apiQueryUrl));
+            ViewData["Message"] = listOfRepos;
+            return View();
         }
 
         private string GetRestResponse(string url)

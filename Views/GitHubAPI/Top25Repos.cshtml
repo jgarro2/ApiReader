@@ -1,4 +1,6 @@
-﻿@model IEnumerable<ApiReader.Models.GitHubRepoModel>
+﻿@using ApiReader.Models
+@using Newtonsoft.Json.Linq;
+@model IEnumerable<ApiReader.Models.GitHubRepoModel>
 
 @{
     ViewBag.Title = "Top 25 GitHub Repositories";
@@ -7,26 +9,28 @@
 
 <h2>Top25Repos</h2>
 
-
+@{ 
+    var data = (List<GitHubRepoModel>)ViewData["Message"];   
+}
 
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.OwnerLogin)</th>
-            <th scope="col">@Html.DisplayNameFor(model => model.StargazersCount)</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>            
+            @*<th scope="col">Owner</th>*@
+            <th scope="col">Stars</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var repo in Model)
+        @foreach (GitHubRepoModel repo in data)
         {
-            <tr>
-                <th scope="row"> @Html.DisplayFor(modelItem => repo.Id)</th>
-                <td>@Html.DisplayFor(modelItem => repo.Name)</td>
-                <td>@Html.DisplayFor(modelItem => repo.OwnerLogin)</td>
-                <td>@Html.DisplayFor(modelItem => repo.StargazersCount)</td>
-            </tr>
+        <tr>
+            <th scope="row"> @repo.Id</th>
+            <td><a href="@Html.DisplayFor(modelItem => repo.Html_Url)">@Html.DisplayFor(modelItem => repo.Name)</a></td>
+            @*<td>@Html.DisplayFor(modelItem => repo.Owner_Login)</td>*@
+            <td>@Html.DisplayFor(modelItem => repo.Stargazers_Count)</td>
+        </tr>
         }
     </tbody>
 </table>

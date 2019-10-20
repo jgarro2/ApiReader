@@ -15,12 +15,12 @@ namespace ApiReader.Models
         public string Name { get; set; }
        
         [JsonProperty(PropertyName = "html_url")]
-        public string HtmlUrl { get; set; }
+        public string Html_Url { get; set; }
         
-        [JsonProperty(PropertyName = "owner.login")]
-        public string OwnerLogin { get; set; }
+        [JsonProperty(PropertyName = "owner/login")]
+        public string Owner_Login { get; set; }
         
         [JsonProperty(PropertyName = "stargazers_count")]
-        public int StargazersCount { get; set; }
+        public int Stargazers_Count { get; set; }
     }
 }
